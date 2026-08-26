@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Competitive Strategies of Small-Scale Beer Producers in Gauteng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple-900:#2e0a52;
+  --purple-800:#3d0f68;
+  --purple-700:#4c1585;
+  --purple-600:#6224a3;
+  --purple-500:#7c3fc4;
+  --lavender-200:#ece0fb;
+  --lavender-100:#f4eefb;
+  --lavender-50:#f8f4fd;
+  --blue-accent:#4f7df3;
+  --ink-900:#20142e;
+  --ink-600:#584d68;
+  --ink-400:#847a92;
+  --line:#e4d9f5;
+  --white:#ffffff;
+  --sage-600:#3f8a5c;
+  --sage-100:#e6f5ec;
+  --font-display:'Poppins', sans-serif;
+  --font-body:'Inter', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+  --radius:14px;
+  --shadow: 0 1px 2px rgba(46,10,82,.06), 0 10px 30px -14px rgba(46,10,82,.18);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--lavender-100);
+  color:var(--ink-900);
+  font-family:var(--font-body);
+  line-height:1.55;
+  min-height:100vh;
+}
+h1,h2,h3,h4{ font-family:var(--font-display); font-weight:600; color:var(--ink-900); margin:0 0 .3em; }
+p{margin:0 0 .8em;}
+.mono{ font-family:var(--font-mono); }
+button{ font-family:var(--font-body); cursor:pointer; }
+input, textarea, select{
+  font-family:var(--font-body); background:var(--white); border:1px solid var(--line);
+  color:var(--ink-900); border-radius:9px; padding:11px 13px; font-size:14.5px; width:100%;
+}
+input:focus, textarea:focus, select:focus{ outline:2px solid var(--purple-500); outline-offset:1px; border-color:var(--purple-500); }
+textarea{ resize:none; overflow:hidden; line-height:1.55; min-height:46px; }
+select{ appearance:none; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23584d68'><path d='M5.5 7.5l4.5 4.5 4.5-4.5' stroke='%23584d68' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>"); background-repeat:no-repeat; background-position:right 12px center; padding-right:34px; }
+label{ font-size:13px; color:var(--ink-600); font-weight:600; display:block; margin-bottom:6px; }
+
+.btn{
+  display:inline-flex; align-items:center; gap:7px; background:var(--white); color:var(--purple-700);
+  border:1px solid var(--line); border-radius:9px; padding:9px 15px; font-size:13.5px; font-weight:600;
+  transition:transform .12s ease, border-color .12s ease, background .12s ease;
+}
+.btn:hover{ border-color:var(--purple-500); background:var(--lavender-50); }
+.btn:active{ transform:scale(.97); }
+.btn-primary{ background:var(--purple-700); border-color:var(--purple-700); color:#fff; }
+.btn-primary:hover{ background:var(--purple-800); }
+.btn-ghost{ background:transparent; border-color:transparent; color:var(--ink-600); }
+.btn-ghost:hover{ color:var(--purple-700); background:var(--lavender-50); }
+.btn-sm{ padding:7px 11px; font-size:12.5px; }
+.btn:disabled{ opacity:.4; cursor:not-allowed; transform:none; }
+
+/* ===== Shell ===== */
+.shell{ max-width:840px; margin:0 auto; padding:26px 20px 60px; }
+
+.toolbar{ display:flex; justify-content:flex-end; gap:8px; margin-bottom:14px; }
+
+.brand-card{
+  background:var(--white); border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:var(--shadow); padding:28px 32px; margin-bottom:0;
+  display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+}
+.nwu-lockup{ display:flex; align-items:center; gap:12px; }
+.nwu-mark{ width:52px; height:52px; flex:none; }
+.nwu-mark svg{ width:100%; height:100%; }
+.nwu-word{ font-family:var(--font-display); font-weight:700; font-size:26px; color:var(--purple-800); letter-spacing:.01em; line-height:1; display:flex; align-items:flex-start; gap:2px; }
+.nwu-word sup{ font-size:11px; margin-top:2px; }
+.nwu-sub{ font-size:11px; color:var(--ink-400); letter-spacing:.04em; text-transform:uppercase; margin-top:3px; }
+
+.brewers-lockup{ display:flex; align-items:center; gap:10px; }
+.brewers-mark{ width:44px; height:44px; flex:none; }
+.brewers-mark svg{ width:100%; height:100%; }
+.brewers-word{ font-family:var(--font-display); font-weight:700; font-size:24px; color:var(--purple-800); }
+
+.title-bar{ height:6px; background:linear-gradient(90deg, var(--purple-700), var(--blue-accent)); border-radius:0 0 6px 6px; margin-bottom:22px; }
+
+.progress-track{ height:6px; background:var(--lavender-200); border-radius:999px; overflow:hidden; margin-bottom:10px; }
+.progress-fill{ height:100%; background:linear-gradient(90deg, var(--purple-600), var(--blue-accent)); border-radius:999px; transition:width .3s ease; width:0%; }
+.progress-meta{ display:flex; justify-content:space-between; font-size:12px; color:var(--ink-400); margin-bottom:20px; }
+
+.step-dots{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:20px; }
+.step-dot{
+  width:30px; height:30px; border-radius:50%; border:1.5px solid var(--line); background:var(--white);
+  display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:700; color:var(--ink-400);
+  flex:none;
+}
+.step-dot.done{ background:var(--sage-100); border-color:var(--sage-600); color:var(--sage-600); }
+.step-dot.current{ background:var(--purple-700); border-color:var(--purple-700); color:#fff; }
+
+.section-pill{
+  display:inline-block; background:var(--lavender-200); color:var(--purple-800); font-weight:700;
+  font-size:13px; padding:8px 18px; border-radius:12px 12px 0 0; margin-bottom:-1px; position:relative; z-index:1;
+}
+
+.page{ display:none; }
+.page.active{ display:block; }
+
+.page-card{
+  background:var(--white); border:1px solid var(--line); border-left:5px solid var(--blue-accent);
+  border-radius:0 var(--radius) var(--radius) var(--radius); box-shadow:var(--shadow);
+  padding:26px 30px 30px;
+}
+.page-card.details-card{ border-left-color:var(--purple-600); border-radius:var(--radius); }
+
+.page-card h2{ font-size:21px; margin-bottom:4px; }
+.page-desc{ font-size:13.5px; color:var(--ink-600); margin-bottom:18px; }
+.rq-banner{
+  background:var(--lavender-50); border:1px solid var(--line); border-radius:10px;
+  padding:13px 16px; margin-bottom:20px; font-size:13.5px; color:var(--ink-600);
+}
+.rq-banner b{ color:var(--purple-700); }
+
+.detail-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:16px; margin-bottom:6px; }
+.consent-box{ background:var(--sage-100); border-radius:10px; padding:16px 18px; margin-top:20px; }
+.consent-box h4{ color:var(--sage-600); font-size:13.5px; margin-bottom:8px; }
+.consent-box ul{ margin:0; padding-left:18px; font-size:13px; color:var(--ink-600); }
+.consent-box li{ margin-bottom:5px; }
+
+.q-block{ margin-bottom:20px; padding-bottom:2px; }
+.q-block label{ color:var(--ink-900); font-size:15px; font-weight:600; margin-bottom:8px; }
+.q-num{ color:var(--purple-600); font-family:var(--font-mono); margin-right:6px; font-size:13px; }
+
+.multiselect{ display:flex; flex-direction:column; gap:6px; background:var(--lavender-50); border:1px solid var(--line); border-radius:9px; padding:10px 12px; }
+.ms-option{ display:flex; align-items:center; gap:9px; font-size:13.5px; font-weight:400; color:var(--ink-900); cursor:pointer; margin:0; text-transform:none; letter-spacing:0; }
+.ms-option input[type=checkbox]{ width:16px; height:16px; flex:none; accent-color:var(--purple-600); padding:0; margin:0; }
+
+.followups{ display:none; margin-top:2px; padding-top:8px; border-top:1px dashed var(--line); }
+.followups.open{ display:block; }
+.toggle-followups{ margin:2px 0 18px; }
+.toggle-followups .arrow{ display:inline-block; transition:transform .15s ease; }
+.toggle-followups.open .arrow{ transform:rotate(90deg); }
+
+.closing-note{ font-size:12.5px; color:var(--ink-400); font-style:italic; margin-top:6px; }
+.thankyou{ text-align:center; padding:24px; border-top:1px solid var(--line); margin-top:16px; }
+.thankyou p{ font-family:var(--font-display); font-size:16px; color:var(--purple-700); margin:0; font-weight:600; }
+
+.page-nav{ display:flex; justify-content:space-between; align-items:center; margin-top:22px; }
+.page-nav .spacer{ flex:1; }
+
+.success-card{ text-align:center; padding:44px 30px; border-left-color:var(--sage-600); }
+.success-icon{ width:56px; height:56px; margin:0 auto 16px; border-radius:50%; background:var(--sage-100); color:var(--sage-600); font-size:28px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.success-card h2{ font-size:22px; }
+.success-summary{ font-size:13px; color:var(--ink-400); margin:10px 0 22px; font-family:var(--font-mono); }
+.success-actions{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+#successPage{ margin-top:0; }
+
+footer{ text-align:center; padding:26px 20px 10px; color:var(--ink-400); font-size:11.5px; }
+
+@media print{
+  .toolbar, .page-nav, .toggle-followups, .step-dots, .progress-track, .progress-meta, footer{ display:none !important; }
+  body{ background:#fff; }
+  .page{ display:block !important; }
+  #successPage{ display:none !important; }
+  .page-card{ box-shadow:none; border:1px solid #ccc; page-break-inside:avoid; margin-bottom:18px; }
+  .followups{ display:block !important; }
+}
+
+::-webkit-scrollbar{ height:10px; width:10px; }
+::-webkit-scrollbar-track{ background:var(--lavender-100); }
+::-webkit-scrollbar-thumb{ background:var(--lavender-200); border-radius:6px; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <div class="toolbar">
+    <button class="btn btn-sm" id="downloadBtn">⬇ Download .txt</button>
+    <button class="btn btn-sm" id="printBtn">🖨 Print / PDF</button>
+    <button class="btn btn-sm btn-ghost" id="newInterviewBtn">New interview</button>
+  </div>
+
+  <div class="brand-card">
+    <div class="nwu-lockup">
+      <div class="nwu-mark">
+        <svg viewBox="0 0 52 52" fill="none">
+          <path d="M14 10 C14 10 14 26 14 30 C14 37 19 42 26 42 C33 42 38 37 38 30 C38 26 38 10 38 10" stroke="#4c1585" stroke-width="6.5" stroke-linecap="round" fill="none"/>
+          <path d="M26 20 C26 20 26 26 26 30" stroke="#4c1585" stroke-width="6.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="nwu-word">NWU<sup>&reg;</sup></div>
+        <div class="nwu-sub">Business School</div>
+      </div>
+    </div>
+    <div class="brewers-lockup">
+      <div class="brewers-mark">
+        <svg viewBox="0 0 44 44" fill="none">
+          <line x1="8" y1="6" x2="8" y2="18" stroke="#3d0f68" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="8" y1="8" x2="16" y2="8" stroke="#3d0f68" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="4" y="16" width="26" height="24" rx="3" fill="#3d0f68"/>
+          <path d="M30 22 h6 a3 3 0 0 1 3 3 v6 a3 3 0 0 1 -3 3 h-6" stroke="#3d0f68" stroke-width="2.5" fill="none"/>
+          <rect x="9" y="21" width="16" height="13" rx="1.5" fill="#fff" opacity=".9"/>
+        </svg>
+      </div>
+      <div class="brewers-word">Craft Brewers</div>
+    </div>
+  </div>
+  <div class="title-bar"></div>
+
+  <div style="height:22px;"></div>
+
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-meta"><span id="progressLabel">Interview details</span><span id="progressPct">0% answered</span></div>
+  <div class="step-dots" id="stepDots"></div>
+
+  <div id="pagesHost"></div>
+
+  <div class="page" id="successPage">
+    <div class="page-card success-card">
+      <div class="success-icon">✓</div>
+      <h2>Response recorded</h2>
+      <p class="page-desc">The completed interview log has been downloaded to your computer as a .txt file.</p>
+      <div class="success-summary" id="successSummary"></div>
+      <div class="success-actions">
+        <button class="btn" id="reviewAnswersBtn">← Review answers</button>
+        <button class="btn" id="downloadAgainBtn">⬇ Download again</button>
+        <button class="btn btn-primary" id="newInterviewBtnSuccess">Start next interview</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>Competitive Strategies of Small-Scale Beer Producers in Gauteng · North-West University Business School · Data stored locally in this browser only</footer>
+
+<script>
+(function(){
+"use strict";
+
+var BREWERIES = [
+  "Hazeldean Brewing Co.","Drayman's Brewery","Brewhogs","Agar's Brewery","Swagga Breweries",
+  "Gilroy's Brewery","Black Horse Brewery","OC Brewery","Dancing Hops Brewery","Frontier Beer Company",
+  "Friar's Habit Craft Brewery","InMind Brewing Company","Stimela Brewing Company","Zeppelin Craft Brewery",
+  "Tolokazi Beer","Msiza Beer","mohopebrew","Centurion Beerworks","Yeah Brew!","Just Brewing Co",
+  "Harper Brewing Co","Langfontein Brewery"
+];
+var POSITIONS = ["General Manager/Operations Manager","Master Brewer","CEO/Founder/Owner"];
+
+var SCALE_IMPORTANCE = ["Not important","Somewhat important","Important","Very important","Critical"];
+var SCALE_ROLE = ["No role","Minor role","Moderate role","Major role","Central / critical role"];
+var SCALE_DIFFICULTY = ["Not difficult","Slightly difficult","Moderately difficult","Very difficult","Extremely difficult"];
+var SCALE_LEVEL = ["Very low","Low","Moderate","High","Very high"];
+var SCALE_RISK = ["Very risk-averse","Somewhat risk-averse","Neutral","Somewhat risk-taking","Very risk-taking"];
+var STRATEGY_CODES = ["Cost leadership","Differentiation","Focus / niche","Premium positioning","Direct-to-consumer","Experiential marketing (events/taproom)","Branding","Partnerships / collaboration","Other"];
+var RESOURCE_CODES = ["Brewing expertise","Brand equity","Relational capital (supplier/distributor/retailer relationships)","Financial capital","Equipment / technology","Location","Human capital / staff skills","Other"];
+var PERFORMANCE_CODES = ["Sales growth","Profitability / margins","Customer retention / loyalty","Brand recognition growth","Market share","Customer feedback / satisfaction","Other"];
+var SUPPORT_CODES = ["Government / policy support","Access to finance","Industry collaboration / associations","Improved distribution / retail access","Marketing / promotional support","Skills development / training","Other"];
+var CHANGE_TYPE_CODES = ["Shifted target market / segment","Changed pricing approach","Added new distribution channels","Changed product range / style focus","Increased focus on branding / marketing","No significant change","Other"];
+var OPPORTUNITY_SOURCE_CODES = ["Customer feedback","Monitoring competitors","Industry events / networking","Market research / trends","Social media / online trends","Other"];
+
+/* ============================================================
+   DATA — Sections A–I, core prompts shown by default, follow-ups toggled
+   ============================================================ */
+var SECTIONS = [
+  {
+    id:"A", title:"Participant & Business Profile", rq:null,
+    intro:"Quick-select context questions for this case.",
+    core:[
+      { type:"select", text:"How would you describe the size and scale of your brewery?", key:"A_size", options:[
+        "Nano / home-scale (under 500L per month)",
+        "Micro brewery (500L–5,000L per month)",
+        "Small brewery (5,000L–20,000L per month)",
+        "Established small-scale brewery (over 20,000L per month)"
+      ]},
+      { type:"compound", text:"What are your main beer products and target customer segments?", key:"A_products", parts:[
+        { label:"Main beer product range", key:"A_products_range", options:[
+          "Lagers / pilsners","Ales (pale ale, amber ale, brown ale)","IPAs / hoppy beers","Stouts / porters",
+          "Wheat beers","Sours / wild / barrel-aged","Seasonal / specialty / experimental","Wide mixed range (multiple styles)"
+        ]},
+        { label:"Primary target customer segment", key:"A_products_segment", options:[
+          "Craft beer enthusiasts / connoisseurs","General / mainstream beer drinkers","Young urban professionals",
+          "Hospitality trade (bars, restaurants, hotels)","Health-conscious / craft-curious drinkers","Broad / mixed customer base"
+        ]}
+      ]},
+      { type:"select", text:"How long has the brewery been operating?", key:"A_years", options:[
+        "Less than 1 year","1–2 years","3–5 years","6–10 years","11–15 years","16–20 years","More than 20 years"
+      ]},
+      { type:"compound", text:"Approximately what proportion of your sales is generated through direct sales, distributors, retail outlets, hospitality businesses, events or other channels?", key:"A_sales", parts:[
+        { label:"Primary sales channel", key:"A_sales_channel", options:[
+          "Direct sales (taproom / cellar door)","Distributors","Retail outlets (bottle stores, supermarkets)",
+          "Hospitality (bars, restaurants, hotels)","Events / festivals","Online / e-commerce / delivery"
+        ]},
+        { label:"Approximate share of total sales from this channel", key:"A_sales_share", options:[
+          "Less than 25%","25%–50%","51%–75%","More than 75%"
+        ]}
+      ]},
+      { type:"select", text:"How would you describe the geographic market in which your brewery primarily operates?", key:"A_geo", options:[
+        "Local (single suburb or town)","Regional (North of Gauteng / greater Gauteng)","Provincial (multiple provinces)",
+        "National","International / export"
+      ]}
+    ],
+    followups:[]
+  },
+  {
+    id:"B", title:"Competitive Environment", rq:null,
+    intro:"These questions establish the competitive conditions within which the brewery operates.",
+    core:[
+      { type:"select", text:"How would you describe the level of competition in the South African beer market?", key:"B_level", options:SCALE_LEVEL },
+      { type:"multiselect", text:"What are the main competitive challenges facing your brewery?", key:"B_challenges", options:[
+        "Price competition from large breweries","Limited distribution/retail access","Regulatory/licensing costs",
+        "Input/ingredient costs","Access to finance","Changing consumer preferences","Limited brand awareness","Other"
+      ]},
+      { type:"multiselect", text:"In what ways does competition from large established breweries affect your business?", key:"B_largeeffect", options:[
+        "Reduced shelf space / retail access","Price pressure","Marketing/advertising dominance",
+        "Limits ability to scale","Little to no effect","Other"
+      ]}
+    ],
+    followups:[
+      { type:"select", text:"How difficult is it for your brewery to access distribution and retail channels?", key:"B_distdiff", options:SCALE_DIFFICULTY },
+      { type:"multiselect", text:"What barriers make it difficult for small-scale breweries to compete with larger breweries?", key:"B_barriers", options:[
+        "Economies of scale / production cost","Distribution network access","Retail shelf space","Marketing budget",
+        "Regulatory/compliance costs","Brand recognition","Access to finance","Other"
+      ]},
+      { type:"multiselect", text:"How do changes in customer preferences influence your competitive strategy?", key:"B_prefinfluence", options:[
+        "Drives new product development","Shifts marketing/branding focus","Changes pricing strategy","Limited influence","Other"
+      ]},
+      { type:"select", text:"How would you describe the bargaining power of distributors, retailers and other intermediaries in your market?", key:"B_bargaining", options:SCALE_LEVEL }
+    ]
+  },
+  {
+    id:"C", title:"Competitive Strategies", rq:1,
+    rqText:"What competitive strategies are employed by small-scale beer producers in the North of Gauteng to survive within a concentrated market?",
+    core:[
+      { type:"multiselect", text:"What are the main strategies your brewery uses to compete in the market?", key:"C_mainstrat", options:STRATEGY_CODES },
+      { type:"multiselect", text:"How does your brewery differentiate its products from those of competitors?", key:"C_differentiate", options:[
+        "Unique flavours/recipes","Ingredient quality/sourcing","Packaging/branding","Brewing technique/process",
+        "Story/heritage","Sustainability practices","Other"
+      ]},
+      { type:"compound", text:"Which competitive strategy has been most effective for your brewery, and why?", key:"C_moseffective", parts:[
+        { label:"Most effective strategy", key:"C_moseffective_strategy", options:STRATEGY_CODES },
+        { label:"Main reason it worked", key:"C_moseffective_reason", options:[
+          "Increased sales/revenue","Improved brand recognition","Increased customer loyalty","Reduced costs","Differentiated from competitors","Other"
+        ]}
+      ]}
+    ],
+    followups:[
+      { type:"select", text:"What role does product quality play in your competitive strategy?", key:"C_qualityrole", options:SCALE_ROLE },
+      { type:"select", text:"How important is branding in attracting and retaining customers?", key:"C_brandingimp", options:SCALE_IMPORTANCE },
+      { type:"compound", text:"Does your brewery target specific customer niches or market segments? If so, how?", key:"C_niche", parts:[
+        { label:"Targets a specific niche?", key:"C_niche_yn", type:"yesno" },
+        { label:"If yes, which niche(s)?", key:"C_niche_which", type:"multiselect", options:[
+          "Craft beer enthusiasts","Local community","Hospitality trade","Health-conscious drinkers","Young professionals","Other"
+        ]}
+      ]},
+      { type:"select", text:"How important is premium positioning to your business strategy?", key:"C_premiumimp", options:SCALE_IMPORTANCE },
+      { type:"select", text:"How does your brewery approach pricing in relation to competitors?", key:"C_pricing", options:[
+        "Below competitors (lower price)","In line with competitors","Above competitors (premium price)","Varies by product line"
+      ]},
+      { type:"select", text:"What role do taprooms, festivals, events or other experiential activities play in your competitive strategy?", key:"C_experiential", options:SCALE_ROLE },
+      { type:"select", text:"How important are direct-to-consumer sales to your business?", key:"C_dtcimp", options:SCALE_IMPORTANCE },
+      { type:"compound", text:"Does your brewery use partnerships or collaborations with other businesses as part of its competitive strategy?", key:"C_partner", parts:[
+        { label:"Uses partnerships/collaborations?", key:"C_partner_yn", type:"yesno" },
+        { label:"If yes, type of partnership", key:"C_partner_type", type:"multiselect", options:[
+          "Co-branded / collab beers","Retail or distribution partnerships","Hospitality venue partnerships",
+          "Marketing / cross-promotion","Supplier partnerships","Other"
+        ]}
+      ]}
+    ]
+  },
+  {
+    id:"D", title:"Resources & Capabilities", rq:2,
+    rqText:"What key resources and capabilities enable these producers to implement and sustain their competitive strategies?",
+    core:[
+      { type:"multiselect", text:"What resources do you consider most important to the success of your brewery?", key:"D_important", options:RESOURCE_CODES },
+      { type:"multiselect", text:"Which skills and capabilities distinguish your brewery from competitors?", key:"D_skills", options:[
+        "Brewing / technical expertise","Innovation / recipe development","Marketing / branding skills",
+        "Customer relationship management","Operational / business management","Sales / distribution networks","Other"
+      ]},
+      { type:"multiselect", text:"Which resources or capabilities are difficult for competitors to imitate?", key:"D_inimitable", options:[
+        "Brewing expertise / recipes","Brand reputation / story","Customer relationships / loyalty",
+        "Location / premises","Supplier relationships","None / not sure","Other"
+      ]}
+    ],
+    followups:[
+      { type:"select", text:"How important is your brewing knowledge and technical expertise to your competitive position?", key:"D_brewimp", options:SCALE_IMPORTANCE },
+      { type:"select", text:"How important are your brand, reputation and customer relationships?", key:"D_brandimp", options:SCALE_IMPORTANCE },
+      { type:"select", text:"What role do employees and managerial capabilities play in your competitiveness?", key:"D_employeerole", options:SCALE_ROLE },
+      { type:"select", text:"How important are relationships with suppliers, distributors, retailers and other business partners?", key:"D_relimp", options:SCALE_IMPORTANCE },
+      { type:"multiselect", text:"What resources or capabilities does your brewery currently lack that could improve your competitiveness?", key:"D_lacking", options:[
+        "Financial capital / investment","Marketing / branding expertise","Distribution network access",
+        "Skilled staff / brewing expertise","Production capacity / equipment","None — well resourced","Other"
+      ]}
+    ]
+  },
+  {
+    id:"E", title:"Adaptation & Dynamic Capabilities", rq:3,
+    rqText:"How do small-scale beer producers adapt their strategies in response to structural constraints within a concentrated beer market?",
+    core:[
+      { type:"compound", text:"How has your competitive strategy changed since the brewery was established?", key:"E_changed", parts:[
+        { label:"Has your strategy changed significantly?", key:"E_changed_yn", type:"yesno" },
+        { label:"Nature of the change", key:"E_changed_type", type:"multiselect", options:CHANGE_TYPE_CODES }
+      ]},
+      { type:"multiselect", text:"How do you identify new opportunities in the market?", key:"E_identify", options:OPPORTUNITY_SOURCE_CODES },
+      { type:"compound", text:"Can you provide an example of a significant strategic change your brewery has implemented?", key:"E_example", parts:[
+        { label:"Has a specific example?", key:"E_example_yn", type:"yesno" },
+        { label:"Type of change (if yes)", key:"E_example_type", type:"multiselect", options:CHANGE_TYPE_CODES }
+      ]}
+    ],
+    followups:[
+      { type:"multiselect", text:"What changes in the market have required your brewery to adapt?", key:"E_marketchanges", options:[
+        "Increased competition","Changing consumer preferences","Economic conditions / cost pressures",
+        "Regulatory changes","Supply chain disruptions","Distribution / retail access changes","None significant","Other"
+      ]},
+      { type:"select", text:"How do you respond when you identify a new customer trend or market opportunity?", key:"E_respond", options:[
+        "Act quickly to capitalise","Assess carefully before acting","Wait for more evidence / validation","Rarely act on trends","Other"
+      ]},
+      { type:"select", text:"How quickly can your brewery respond to changes in customer demand compared with larger competitors?", key:"E_speed", options:[
+        "Much faster","Somewhat faster","About the same","Somewhat slower","Much slower"
+      ]},
+      { type:"multiselect", text:"How do financial, regulatory or distribution constraints influence your ability to adapt?", key:"E_constraints", options:[
+        "Financial constraints limit adaptation","Regulatory / licensing constraints limit adaptation",
+        "Distribution constraints limit adaptation","Constraints have little influence","Other"
+      ]},
+      { type:"compound", text:"What strategies have you abandoned or changed because they were not successful?", key:"E_abandoned", parts:[
+        { label:"Have you abandoned any strategy?", key:"E_abandoned_yn", type:"yesno" },
+        { label:"Type of strategy abandoned (if yes)", key:"E_abandoned_type", type:"multiselect", options:[
+          "Pricing strategy","Product / style range","Marketing / branding approach","Distribution channel","Target market / segment","Other"
+        ]}
+      ]}
+    ]
+  },
+  {
+    id:"F", title:"Entrepreneurial Orientation", rq:4,
+    rqText:"How does entrepreneurial orientation influence strategic positioning and competitive behaviour among small-scale producers?",
+    core:[
+      { type:"select", text:"How important is innovation to your brewery?", key:"F_innovationimp", options:SCALE_IMPORTANCE },
+      { type:"compound", text:"Would you describe your brewery as proactive in pursuing new market opportunities? Why?", key:"F_proactive", parts:[
+        { label:"Proactive in pursuing opportunities?", key:"F_proactive_yn", type:"yesno" },
+        { label:"Main reason / evidence", key:"F_proactive_reason", type:"multiselect", options:[
+          "First-mover on trends","Regularly test new products","Actively seek new markets/channels","Prefer to follow proven approaches","Other"
+        ]}
+      ]},
+      { type:"select", text:"How willing is your brewery to take risks when pursuing new business opportunities?", key:"F_risk", options:SCALE_RISK }
+    ],
+    followups:[
+      { type:"select", text:"How frequently does your brewery introduce new products, flavours or experiences?", key:"F_frequency", options:[
+        "Monthly or more often","Every few months","1–2 times per year","Rarely","Never"
+      ]},
+      { type:"multiselect", text:"How does your brewery identify emerging customer needs?", key:"F_identifyneeds", options:OPPORTUNITY_SOURCE_CODES },
+      { type:"compound", text:"Can you provide an example of a risky decision that produced either a positive or negative outcome?", key:"F_riskexample", parts:[
+        { label:"Has a specific example?", key:"F_riskexample_yn", type:"yesno" },
+        { label:"Outcome (if yes)", key:"F_riskexample_outcome", options:["Positive outcome","Negative outcome","Mixed outcome","Not applicable"] }
+      ]},
+      { type:"select", text:"How does experimentation influence your competitive strategy?", key:"F_experiment", options:SCALE_ROLE },
+      { type:"select", text:"How important is entrepreneurial leadership to the success of your brewery?", key:"F_leadershipimp", options:SCALE_IMPORTANCE }
+    ]
+  },
+  {
+    id:"G", title:"Strategic Effectiveness & Sustainability", rq:5,
+    rqText:"How do producers evaluate the effectiveness and long-term sustainability of their competitive strategies?",
+    core:[
+      { type:"multiselect", text:"How do you determine whether your competitive strategy is successful?", key:"G_determine", options:PERFORMANCE_CODES },
+      { type:"multiselect", text:"What performance indicators do you use to assess the success of the brewery?", key:"G_indicators", options:PERFORMANCE_CODES },
+      { type:"multiselect", text:"What are the biggest threats to the long-term sustainability of your brewery?", key:"G_threats", options:[
+        "Rising input / ingredient costs","Competition from large breweries","Limited access to finance",
+        "Regulatory / compliance burden","Changing consumer preferences","Distribution / retail access","Economic conditions","Other"
+      ]}
+    ],
+    followups:[
+      { type:"select", text:"How important are sales growth and profitability when evaluating strategic performance?", key:"G_growthimp", options:SCALE_IMPORTANCE },
+      { type:"multiselect", text:"How do you measure customer loyalty and customer retention?", key:"G_loyalty", options:[
+        "Repeat purchase tracking","Customer feedback / surveys","Taproom / event attendance",
+        "Social media engagement","Informal observation","Don't formally measure","Other"
+      ]},
+      { type:"multiselect", text:"How do you determine whether a new product or marketing initiative has been successful?", key:"G_newproduct", options:[
+        "Sales performance","Customer feedback","Social media engagement/response","Repeat orders","Don't formally evaluate","Other"
+      ]},
+      { type:"multiselect", text:"Which strategies have contributed most to the survival and growth of your brewery?", key:"G_contributed", options:STRATEGY_CODES },
+      { type:"multiselect", text:"Which strategies have not produced the expected results?", key:"G_notworked", options:STRATEGY_CODES.concat(["None — all successful"]) }
+    ]
+  },
+  {
+    id:"H", title:"Recommendations & Industry Support", rq:6,
+    rqText:"What strategic interventions or support mechanisms could enhance the competitiveness of small-scale beer producers in the North of Gauteng?",
+    core:[
+      { type:"multiselect", text:"What support would most improve the competitiveness of your brewery?", key:"H_support", options:SUPPORT_CODES },
+      { type:"multiselect", text:"What role should government and industry-support organisations play in supporting small-scale beer producers?", key:"H_govrole", options:[
+        "Reduce regulatory / licensing burden","Provide financial support / grants","Support industry collaboration",
+        "Promote local craft beer industry","Provide training / skills development","Other"
+      ]},
+      { type:"multiselect", text:"What advice would you give to a new small-scale brewery entering the South African beer market?", key:"H_advice", options:[
+        "Focus on differentiation / niche","Build strong branding early","Manage costs carefully",
+        "Build direct-to-consumer channels","Network within the industry","Other"
+      ]}
+    ],
+    followups:[
+      { type:"multiselect", text:"What could small-scale breweries do differently to compete more effectively?", key:"H_dodifferent", options:[
+        "Strengthen branding / marketing","Collaborate with other breweries","Focus on niche / differentiation",
+        "Improve direct-to-consumer sales","Improve product quality / consistency","Other"
+      ]},
+      { type:"select", text:"What role could collaboration between small breweries play in improving competitiveness?", key:"H_collabrole", options:SCALE_ROLE },
+      { type:"multiselect", text:"What could distributors and retailers do to improve market access for small breweries?", key:"H_distributors", options:[
+        "Allocate more shelf space","Offer fairer trading terms","Support local/small producers actively","Simplify listing requirements","Other"
+      ]},
+      { type:"multiselect", text:"What changes to the business or regulatory environment would make it easier for small breweries to compete?", key:"H_regchanges", options:[
+        "Lower licensing / compliance costs","Tax relief for small producers","Improved access to finance","Simplified regulations","Other"
+      ]}
+    ]
+  },
+  {
+    id:"I", title:"Closing Question", rq:null,
+    core:[
+      { type:"compound", text:"Is there anything else about competing, surviving and growing as a small-scale brewery that you believe is important and that we have not discussed?", key:"I_closing", parts:[
+        { label:"Anything else to raise?", key:"I_closing_yn", type:"yesno" },
+        { label:"If yes, general topic area", key:"I_closing_topic", type:"multiselect", options:[
+          "Financial / cost issues","Market / competition issues","Regulatory issues","Product / innovation issues","Other"
+        ]}
+      ]}
+    ],
+    followups:[],
+    closingNote:"Kept to a Yes/No + topic-area selection per the current instrument design. If the participant raises something substantial here, capture it by hand alongside this form — a fixed list can't anticipate everything."
+  }
+];
+
+var STORAGE_KEY = "beerInterviewGuide_v2";
+var raf = window.requestAnimationFrame || function(cb){ return setTimeout(cb, 0); };
+
+/* ============================================================
+   STATE
+   ============================================================ */
+function loadState(){
+  try{
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return { meta:{}, answers:{} };
+}
+var state = loadState();
+function saveState(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function el(tag, attrs, children){
+  var e = document.createElement(tag);
+  attrs = attrs || {};
+  Object.keys(attrs).forEach(function(k){
+    if(k === "class") e.className = attrs[k];
+    else if(k === "html") e.innerHTML = attrs[k];
+    else if(k.indexOf("on") === 0 && typeof attrs[k] === "function") e.addEventListener(k.slice(2), attrs[k]);
+    else e.setAttribute(k, attrs[k]);
+  });
+  (children||[]).forEach(function(c){ if(c!=null) e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+  return e;
+}
+function autosize(ta){ ta.style.height = "auto"; ta.style.height = (ta.scrollHeight + 2) + "px"; }
+function qKey(sectionId, kind, idx){ return sectionId + "_" + kind + "_" + idx; }
+
+/* ============================================================
+   PAGES: -1 = details page, 0..8 = SECTIONS index
+   ============================================================ */
+var currentPage = -1;
+var TOTAL_PAGES = SECTIONS.length + 1;
+
+function buildDetailsPage(){
+  var host = document.getElementById("pagesHost");
+  var page = el("div",{class:"page", id:"page-details"});
+  var card = el("div",{class:"page-card details-card"});
+  card.appendChild(el("h2",{},["Interview Details"]));
+  card.appendChild(el("div",{class:"page-desc"},["Complete before starting the recording."]));
+
+  var grid = el("div",{class:"detail-grid"});
+
+  function field(labelText, inputEl){
+    var wrap = el("div",{});
+    wrap.appendChild(el("label",{},[labelText]));
+    wrap.appendChild(inputEl);
+    return wrap;
+  }
+
+  var todayStr = new Date().toISOString().slice(0,10);
+  var dateInput = el("input",{type:"date", id:"f_date"});
+  dateInput.value = state.meta.f_date || todayStr;
+  if(!state.meta.f_date){ state.meta.f_date = todayStr; saveState(); }
+  dateInput.addEventListener("input", function(){ state.meta.f_date = dateInput.value; saveState(); });
+  grid.appendChild(field("Date of interview", dateInput));
+
+  var brewerySel = el("select",{id:"f_brewery"});
+  brewerySel.appendChild(el("option",{value:""},["Select brewery..."]));
+  BREWERIES.forEach(function(b){
+    var o = el("option",{value:b},[b]);
+    if(state.meta.f_brewery === b) o.selected = true;
+    brewerySel.appendChild(o);
+  });
+  brewerySel.addEventListener("change", function(){ state.meta.f_brewery = brewerySel.value; saveState(); });
+  grid.appendChild(field("Brewery name", brewerySel));
+
+  var positionSel = el("select",{id:"f_position"});
+  positionSel.appendChild(el("option",{value:""},["Select position..."]));
+  POSITIONS.forEach(function(p){
+    var o = el("option",{value:p},[p]);
+    if(state.meta.f_position === p) o.selected = true;
+    positionSel.appendChild(o);
+  });
+  positionSel.addEventListener("change", function(){ state.meta.f_position = positionSel.value; saveState(); });
+  grid.appendChild(field("Interviewee position", positionSel));
+
+  var consentSel = el("select",{id:"f_consent"});
+  ["","Yes","No"].forEach(function(v){
+    var o = el("option",{value:v},[v||"Select..."]);
+    if(state.meta.f_consent === v) o.selected = true;
+    consentSel.appendChild(o);
+  });
+  consentSel.addEventListener("change", function(){ state.meta.f_consent = consentSel.value; saveState(); });
+  grid.appendChild(field("Consent to record (Y/N)", consentSel));
+
+  card.appendChild(grid);
+
+  var consentBox = el("div",{class:"consent-box"});
+  consentBox.appendChild(el("h4",{},["Before beginning, confirm with the participant that:"]));
+  var ul = el("ul",{});
+  [
+    "Participation is voluntary and they may withdraw at any time without penalty.",
+    "They have received the Participant Information Sheet and provided informed consent.",
+    "Responses will be anonymised using an alphanumeric code (B01–B15) in all analysis and reporting.",
+    "Data will be stored on a password-protected, encrypted device, in compliance with POPIA.",
+    "Consent to audio-record the interview has been obtained, if recording is used."
+  ].forEach(function(t){ ul.appendChild(el("li",{},[t])); });
+  consentBox.appendChild(ul);
+  card.appendChild(consentBox);
+
+  card.appendChild(buildNav(-1));
+  page.appendChild(card);
+  host.appendChild(page);
+}
+
+function buildSectionPage(s, index){
+  var host = document.getElementById("pagesHost");
+  var page = el("div",{class:"page", id:"page-"+s.id});
+  var pill = el("div",{class:"section-pill"},["Section " + (index+1) + " of " + SECTIONS.length]);
+  page.appendChild(pill);
+
+  var card = el("div",{class:"page-card"});
+  card.appendChild(el("h2",{},[s.title]));
+  if(s.intro) card.appendChild(el("div",{class:"page-desc"},[s.intro]));
+  if(s.rq){
+    var banner = el("div",{class:"rq-banner"});
+    banner.innerHTML = "<b>Research Question " + s.rq + ":</b> " + s.rqText;
+    card.appendChild(banner);
+  }
+
+  var qCounter = 0;
+  function renderSelect(key, options, includePlaceholder){
+    var sel = el("select",{id:key});
+    if(includePlaceholder!==false) sel.appendChild(el("option",{value:""},["Select..."]));
+    options.forEach(function(opt){
+      var o = el("option",{value:opt},[opt]);
+      if(state.answers[key] === opt) o.selected = true;
+      sel.appendChild(o);
+    });
+    sel.addEventListener("change", function(){ state.answers[key] = sel.value; saveState(); updateProgress(); });
+    return sel;
+  }
+  function renderMultiselect(key, options){
+    var wrap = el("div",{class:"multiselect"});
+    var current = Array.isArray(state.answers[key]) ? state.answers[key] : [];
+    options.forEach(function(opt){
+      var id = key + "_" + opt.replace(/[^a-z0-9]/gi,"_");
+      var row = el("label",{class:"ms-option", for:id});
+      var cb = el("input",{type:"checkbox", id:id, value:opt});
+      cb.checked = current.indexOf(opt) !== -1;
+      cb.addEventListener("change", function(){
+        var arr = Array.isArray(state.answers[key]) ? state.answers[key].slice() : [];
+        if(cb.checked){ if(arr.indexOf(opt)===-1) arr.push(opt); }
+        else { arr = arr.filter(function(v){ return v!==opt; }); }
+        state.answers[key] = arr;
+        saveState();
+        updateProgress();
+      });
+      row.appendChild(cb);
+      row.appendChild(document.createTextNode(opt));
+      wrap.appendChild(row);
+    });
+    return wrap;
+  }
+  function renderField(fieldType, key, options){
+    if(fieldType === "yesno") return renderSelect(key, ["Yes","No"]);
+    if(fieldType === "multiselect") return renderMultiselect(key, options);
+    return renderSelect(key, options);
+  }
+
+  function makeQBlock(q, kind, idx){
+    qCounter++;
+    var block = el("div",{class:"q-block"});
+    if(typeof q === "string"){
+      var key = qKey(s.id, kind, idx);
+      var label = el("label",{for:key},[ el("span",{class:"q-num"},[qCounter+"."]), q ]);
+      block.appendChild(label);
+      var ta = el("textarea",{id:key, rows:"1", placeholder:"Response notes..."});
+      ta.value = state.answers[key] || "";
+      raf(function(){ autosize(ta); });
+      ta.addEventListener("input", function(){
+        state.answers[key] = ta.value;
+        saveState();
+        autosize(ta);
+        updateProgress();
+      });
+      block.appendChild(ta);
+      return block;
+    }
+    if(q.type === "select" || q.type === "yesno" || q.type === "multiselect"){
+      var key = q.key || qKey(s.id, kind, idx);
+      var label = el("label",{},[ el("span",{class:"q-num"},[qCounter+"."]), q.text ]);
+      block.appendChild(label);
+      block.appendChild(renderField(q.type, key, q.options));
+      return block;
+    }
+    if(q.type === "compound"){
+      var label = el("label",{},[ el("span",{class:"q-num"},[qCounter+"."]), q.text ]);
+      block.appendChild(label);
+      var row = el("div",{style:"display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:12px; margin-top:2px;"});
+      q.parts.forEach(function(part){
+        var wrap = el("div",{});
+        wrap.appendChild(el("label",{style:"font-size:12px; font-weight:600; color:var(--ink-600); margin-bottom:4px;"},[part.label]));
+        wrap.appendChild(renderField(part.type || "select", part.key, part.options));
+        row.appendChild(wrap);
+      });
+      block.appendChild(row);
+      return block;
+    }
+    return block;
+  }
+
+  s.core.forEach(function(q, i){ card.appendChild(makeQBlock(q, "core", i)); });
+
+  if(s.followups && s.followups.length){
+    var toggleBtn = el("button",{class:"btn btn-ghost btn-sm toggle-followups", type:"button"});
+    toggleBtn.innerHTML = '<span class="arrow">▸</span> Show ' + s.followups.length + ' more prompts';
+    var followWrap = el("div",{class:"followups"});
+    s.followups.forEach(function(q, i){ followWrap.appendChild(makeQBlock(q, "follow", i)); });
+    toggleBtn.addEventListener("click", function(){
+      var open = followWrap.classList.toggle("open");
+      toggleBtn.classList.toggle("open", open);
+      toggleBtn.innerHTML = '<span class="arrow">▸</span> ' + (open ? "Hide follow-up prompts" : "Show " + s.followups.length + " more prompts");
+      if(open){ followWrap.querySelectorAll("textarea").forEach(autosize); }
+    });
+    card.appendChild(toggleBtn);
+    card.appendChild(followWrap);
+  }
+
+  if(s.closingNote){
+    card.appendChild(el("div",{class:"closing-note"},[s.closingNote]));
+    card.appendChild(el("div",{class:"thankyou"},[ el("p",{},["Thank you for your time and participation in this research."]) ]));
+  }
+
+  card.appendChild(buildNav(index));
+  page.appendChild(card);
+  host.appendChild(page);
+}
+
+function buildNav(pageIdx){
+  var nav = el("div",{class:"page-nav"});
+  var backBtn = el("button",{class:"btn", disabled: pageIdx <= -1 ? "disabled" : null, onclick:function(){ goToPage(pageIdx-1); }},["← Back"]);
+  if(pageIdx <= -1) backBtn.disabled = true;
+  nav.appendChild(backBtn);
+  nav.appendChild(el("div",{class:"spacer"}));
+  if(pageIdx < SECTIONS.length - 1){
+    nav.appendChild(el("button",{class:"btn btn-primary", onclick:function(){ goToPage(pageIdx+1); }},["Next →"]));
+  } else {
+    nav.appendChild(el("button",{class:"btn btn-primary", id:"submitBtn", onclick:function(){ try{ triggerDownload(); }catch(e){ /* download not available, still confirm submission */ } showSuccessScreen(); }},["✓ Submit"]));
+  }
+  return nav;
+}
+
+function goToPage(idx){
+  currentPage = idx;
+  document.querySelectorAll(".page").forEach(function(p){ p.classList.remove("active"); });
+  var target = idx === -1 ? document.getElementById("page-details") : document.getElementById("page-"+SECTIONS[idx].id);
+  if(target){ target.classList.add("active"); }
+  updateStepDots();
+  updateProgress();
+  window.scrollTo({top:0, behavior:"smooth"});
+  target.querySelectorAll("textarea").forEach(autosize);
+}
+
+function buildStepDots(){
+  var host = document.getElementById("stepDots");
+  host.innerHTML = "";
+  var detailsDot = el("button",{class:"step-dot", title:"Interview details", onclick:function(){ goToPage(-1); }},["•"]);
+  host.appendChild(detailsDot);
+  SECTIONS.forEach(function(s, i){
+    var dot = el("button",{class:"step-dot", title:"Section "+s.id, onclick:function(){ goToPage(i); }},[s.id]);
+    host.appendChild(dot);
+  });
+}
+
+function isAnswered(v){
+  if(Array.isArray(v)) return v.length > 0;
+  return !!(v && String(v).trim());
+}
+
+function questionKeys(q, sectionId, kind, idx){
+  if(typeof q === "string") return [ qKey(sectionId, kind, idx) ];
+  if(q.type === "select" || q.type === "yesno" || q.type === "multiselect") return [ q.key || qKey(sectionId, kind, idx) ];
+  if(q.type === "compound") return q.parts.map(function(p){ return p.key; });
+  return [];
+}
+
+function sectionAnswered(s){
+  var hasAny = false;
+  s.core.forEach(function(q,i){ questionKeys(q, s.id, "core", i).forEach(function(k){ if(isAnswered(state.answers[k])) hasAny = true; }); });
+  (s.followups||[]).forEach(function(q,i){ questionKeys(q, s.id, "follow", i).forEach(function(k){ if(isAnswered(state.answers[k])) hasAny = true; }); });
+  return hasAny;
+}
+function detailsAnswered(){
+  return !!(state.meta.f_brewery || state.meta.f_position);
+}
+
+function updateStepDots(){
+  var dots = document.querySelectorAll(".step-dot");
+  dots[0].classList.toggle("done", detailsAnswered());
+  dots[0].classList.toggle("current", currentPage === -1);
+  SECTIONS.forEach(function(s, i){
+    var dot = dots[i+1];
+    dot.classList.toggle("done", sectionAnswered(s));
+    dot.classList.toggle("current", currentPage === i);
+  });
+}
+
+function updateProgress(){
+  var total = 0, filled = 0;
+  SECTIONS.forEach(function(s){
+    s.core.forEach(function(q,i){ questionKeys(q, s.id, "core", i).forEach(function(k){ total++; if(isAnswered(state.answers[k])) filled++; }); });
+    (s.followups||[]).forEach(function(q,i){ questionKeys(q, s.id, "follow", i).forEach(function(k){ total++; if(isAnswered(state.answers[k])) filled++; }); });
+  });
+  var pct = total ? Math.round((filled/total)*100) : 0;
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("progressPct").textContent = pct + "% answered";
+  var label = currentPage === -1 ? "Interview details" : "Section " + (currentPage+1) + " of " + SECTIONS.length + " — " + SECTIONS[currentPage].title;
+  document.getElementById("progressLabel").textContent = label;
+  updateStepDots();
+}
+
+/* ============================================================
+   EXPORT / RESET
+   ============================================================ */
+function buildTextExport(){
+  var lines = [];
+  lines.push("SEMI-STRUCTURED INTERVIEW GUIDE — RESPONSE LOG");
+  lines.push("An Analysis of Competitive Strategies Employed by Small-Scale Beer Producers in the North of Gauteng in a Concentrated Beer Market");
+  lines.push("");
+  lines.push("Date: " + (state.meta.f_date||""));
+  lines.push("Brewery: " + (state.meta.f_brewery||""));
+  lines.push("Interviewee position: " + (state.meta.f_position||""));
+  lines.push("Consent to record: " + (state.meta.f_consent||""));
+  lines.push("=".repeat(70));
+  SECTIONS.forEach(function(s){
+    lines.push("");
+    lines.push("SECTION " + s.id + " — " + s.title + (s.rq ? " (RQ" + s.rq + ")" : ""));
+    if(s.rqText) lines.push("RQ" + s.rq + ": " + s.rqText);
+    lines.push("-".repeat(70));
+    var n = 0;
+    function formatValue(v){
+      if(Array.isArray(v)) return v.length ? v.join("; ") : "";
+      return v || "";
+    }
+    function exportQ(q, kind, idx){
+      n++;
+      if(typeof q === "string"){
+        var key = qKey(s.id, kind, idx);
+        lines.push(n + ". " + q);
+        lines.push("   > " + (state.answers[key] || "").split("\n").join("\n     "));
+      } else if(q.type === "select" || q.type === "yesno" || q.type === "multiselect"){
+        var key = q.key || qKey(s.id, kind, idx);
+        lines.push(n + ". " + q.text);
+        lines.push("   > " + formatValue(state.answers[key]));
+      } else if(q.type === "compound"){
+        lines.push(n + ". " + q.text);
+        q.parts.forEach(function(part){
+          lines.push("   - " + part.label + ": " + formatValue(state.answers[part.key]));
+        });
+      }
+      lines.push("");
+    }
+    s.core.forEach(function(q,i){ exportQ(q, "core", i); });
+    (s.followups||[]).forEach(function(q,i){ exportQ(q, "follow", i); });
+  });
+  return lines.join("\n");
+}
+
+function triggerDownload(){
+  var text = buildTextExport();
+  var blob = new Blob([text], {type:"text/plain"});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  var code = (state.meta.f_brewery || "interview").replace(/[^a-z0-9]/gi,"_");
+  a.href = url;
+  a.download = "Interview_" + code + "_" + (state.meta.f_date || new Date().toISOString().slice(0,10)) + ".txt";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById("downloadBtn").addEventListener("click", triggerDownload);
+
+document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
+
+function answeredSummary(){
+  var total = 0, filled = 0;
+  SECTIONS.forEach(function(s){
+    s.core.forEach(function(q,i){ questionKeys(q, s.id, "core", i).forEach(function(k){ total++; if(isAnswered(state.answers[k])) filled++; }); });
+    (s.followups||[]).forEach(function(q,i){ questionKeys(q, s.id, "follow", i).forEach(function(k){ total++; if(isAnswered(state.answers[k])) filled++; }); });
+  });
+  return { total:total, filled:filled };
+}
+
+function showSuccessScreen(){
+  document.querySelectorAll(".page").forEach(function(p){ p.classList.remove("active"); });
+  document.querySelector(".progress-track").style.display = "none";
+  document.querySelector(".progress-meta").style.display = "none";
+  document.getElementById("stepDots").style.display = "none";
+  document.getElementById("successPage").classList.add("active");
+  var summary = answeredSummary();
+  document.getElementById("successSummary").textContent =
+    summary.filled + " of " + summary.total + " questions answered — " +
+    (state.meta.f_brewery ? state.meta.f_brewery + " · " : "") + (state.meta.f_date || "");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function hideSuccessScreen(){
+  document.getElementById("successPage").classList.remove("active");
+  document.querySelector(".progress-track").style.display = "";
+  document.querySelector(".progress-meta").style.display = "";
+  document.getElementById("stepDots").style.display = "";
+}
+
+document.getElementById("downloadAgainBtn").addEventListener("click", triggerDownload);
+document.getElementById("reviewAnswersBtn").addEventListener("click", function(){
+  hideSuccessScreen();
+  goToPage(SECTIONS.length - 1);
+});
+
+function startNewInterview(){
+  if(confirm("Start a new interview? This clears all fields and responses currently on screen — download a .txt backup first if you need this data.")){
+    hideSuccessScreen();
+    state = { meta:{}, answers:{} };
+    saveState();
+    document.getElementById("pagesHost").innerHTML = "";
+    buildDetailsPage();
+    SECTIONS.forEach(function(s, i){ buildSectionPage(s, i); });
+    goToPage(-1);
+    return true;
+  }
+  return false;
+}
+document.getElementById("newInterviewBtn").addEventListener("click", startNewInterview);
+document.getElementById("newInterviewBtnSuccess").addEventListener("click", startNewInterview);
+
+/* ============================================================
+   INIT
+   ============================================================ */
+buildDetailsPage();
+SECTIONS.forEach(function(s, i){ buildSectionPage(s, i); });
+buildStepDots();
+goToPage(-1);
+window.addEventListener("resize", function(){
+  document.querySelectorAll(".page.active textarea").forEach(autosize);
+});
+
+})();
+</script>
+</body>
+</html>
