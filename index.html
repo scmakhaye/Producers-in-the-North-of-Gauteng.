@@ -158,6 +158,10 @@ label{ font-size:13px; color:var(--ink-600); font-weight:600; display:block; mar
 .success-icon{ width:56px; height:56px; margin:0 auto 16px; border-radius:50%; background:var(--sage-100); color:var(--sage-600); font-size:28px; font-weight:700; display:flex; align-items:center; justify-content:center; }
 .success-card h2{ font-size:22px; }
 .success-summary{ font-size:13px; color:var(--ink-400); margin:10px 0 22px; font-family:var(--font-mono); }
+.email-status{ font-size:13px; margin:-10px 0 20px; min-height:18px; }
+.email-status.pending{ color:var(--ink-400); }
+.email-status.ok{ color:var(--sage-600); font-weight:600; }
+.email-status.fail{ color:#a83b3b; }
 .success-actions{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
 #successPage{ margin-top:0; }
 
@@ -229,10 +233,14 @@ footer{ text-align:center; padding:26px 20px 10px; color:var(--ink-400); font-si
       <h2>Response recorded</h2>
       <p class="page-desc">The completed interview log has been downloaded to your computer as a .txt file.</p>
       <div class="success-summary" id="successSummary"></div>
+      <div class="email-status" id="emailStatus"></div>
       <div class="success-actions">
         <button class="btn" id="reviewAnswersBtn">← Review answers</button>
         <button class="btn" id="downloadAgainBtn">⬇ Download again</button>
         <button class="btn btn-primary" id="newInterviewBtnSuccess">Start next interview</button>
+      </div>
+      <div class="success-actions" id="retryEmailWrap" style="display:none; margin-top:10px;">
+        <button class="btn btn-sm" id="retryEmailBtn">↻ Retry sending email</button>
       </div>
     </div>
   </div>
@@ -777,7 +785,7 @@ function buildNav(pageIdx){
   if(pageIdx < SECTIONS.length - 1){
     nav.appendChild(el("button",{class:"btn btn-primary", onclick:function(){ goToPage(pageIdx+1); }},["Next →"]));
   } else {
-    nav.appendChild(el("button",{class:"btn btn-primary", id:"submitBtn", onclick:function(){ try{ triggerDownload(); }catch(e){ /* download not available, still confirm submission */ } showSuccessScreen(); }},["✓ Submit"]));
+    nav.appendChild(el("button",{class:"btn btn-primary", id:"submitBtn", onclick:function(){ try{ triggerDownload(); }catch(e){ /* download not available, still confirm submission */ } showSuccessScreen(); try{ attemptEmailSend(); }catch(e){ setEmailStatus("fail", "Could not send automatically — the .txt file was still downloaded to this device."); } }},["✓ Submit"]));
   }
   return nav;
 }
@@ -854,6 +862,11 @@ function updateProgress(){
 /* ============================================================
    EXPORT / RESET
    ============================================================ */
+function formatValue(v){
+  if(Array.isArray(v)) return v.length ? v.join("; ") : "";
+  return v || "";
+}
+
 function buildTextExport(){
   var lines = [];
   lines.push("SEMI-STRUCTURED INTERVIEW GUIDE — RESPONSE LOG");
@@ -870,10 +883,6 @@ function buildTextExport(){
     if(s.rqText) lines.push("RQ" + s.rq + ": " + s.rqText);
     lines.push("-".repeat(70));
     var n = 0;
-    function formatValue(v){
-      if(Array.isArray(v)) return v.length ? v.join("; ") : "";
-      return v || "";
-    }
     function exportQ(q, kind, idx){
       n++;
       if(typeof q === "string"){
@@ -896,6 +905,49 @@ function buildTextExport(){
     (s.followups||[]).forEach(function(q,i){ exportQ(q, "follow", i); });
   });
   return lines.join("\n");
+}
+
+function buildSubmissionPayload(){
+  var payload = {};
+  payload["Date"] = state.meta.f_date || "";
+  payload["Brewery"] = state.meta.f_brewery || "";
+  payload["Interviewee position"] = state.meta.f_position || "";
+  payload["Consent to record"] = state.meta.f_consent || "";
+  SECTIONS.forEach(function(s){
+    function addQ(q, kind, idx){
+      var prefix = "[" + s.id + "] ";
+      if(typeof q === "string"){
+        var key = qKey(s.id, kind, idx);
+        payload[prefix + q] = formatValue(state.answers[key]);
+      } else if(q.type === "select" || q.type === "yesno" || q.type === "multiselect"){
+        var key = q.key || qKey(s.id, kind, idx);
+        payload[prefix + q.text] = formatValue(state.answers[key]);
+      } else if(q.type === "compound"){
+        q.parts.forEach(function(part){
+          payload[prefix + q.text + " — " + part.label] = formatValue(state.answers[part.key]);
+        });
+      }
+    }
+    s.core.forEach(function(q,i){ addQ(q, "core", i); });
+    (s.followups||[]).forEach(function(q,i){ addQ(q, "follow", i); });
+  });
+  payload["_subject"] = "Interview submission — " + (state.meta.f_brewery || "Unnamed brewery") + (state.meta.f_date ? " (" + state.meta.f_date + ")" : "");
+  payload["_template"] = "table";
+  payload["_captcha"] = "false";
+  return payload;
+}
+
+var FORMSUBMIT_EMAIL = "42575486@mynwu.ac.za";
+
+function sendToFormSubmit(){
+  return fetch("https://formsubmit.co/ajax/" + FORMSUBMIT_EMAIL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify(buildSubmissionPayload())
+  }).then(function(res){
+    if(!res.ok) throw new Error("Request failed: " + res.status);
+    return res.json().catch(function(){ return {}; });
+  });
 }
 
 function triggerDownload(){
@@ -935,6 +987,24 @@ function showSuccessScreen(){
     (state.meta.f_brewery ? state.meta.f_brewery + " · " : "") + (state.meta.f_date || "");
   window.scrollTo({top:0, behavior:"smooth"});
 }
+
+function setEmailStatus(statusClass, text){
+  var el = document.getElementById("emailStatus");
+  el.className = "email-status " + statusClass;
+  el.textContent = text;
+  document.getElementById("retryEmailWrap").style.display = (statusClass === "fail") ? "" : "none";
+}
+
+function attemptEmailSend(){
+  setEmailStatus("pending", "Sending a copy to " + FORMSUBMIT_EMAIL + "...");
+  sendToFormSubmit().then(function(){
+    setEmailStatus("ok", "✓ Emailed to " + FORMSUBMIT_EMAIL);
+  }).catch(function(){
+    setEmailStatus("fail", "Could not reach the email service (offline, or first-time confirmation still pending — check " + FORMSUBMIT_EMAIL + " for a one-time confirmation link from FormSubmit). The .txt file was still downloaded to this device.");
+  });
+}
+
+document.getElementById("retryEmailBtn").addEventListener("click", attemptEmailSend);
 
 function hideSuccessScreen(){
   document.getElementById("successPage").classList.remove("active");
